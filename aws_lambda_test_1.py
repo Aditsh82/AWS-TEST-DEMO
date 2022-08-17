@@ -3,7 +3,7 @@ import json
 
 def get_data():
     # S3 bucket we'll be interacting with
-    s3_bucket = "random-users-data-406568989225"
+    s3_bucket = 'random-users-data-406568989225'
     # Because we need to combine data from multiple S3 objects, initialize a list to hold this data before returning it.
     data = []
     # Initialize an boto3 S3 client, and list the objects in our bucket. The data about the contents of our bucket will be stored in a list called s3_keys.
@@ -88,7 +88,7 @@ def get_data():
 
     ########################### WORKING CODE ###############################
     import io
-    fo = io.BytesIO(bytes(",".join(str(i) for i in s3_files_list), "utf-8"))
+    fo = io.BytesIO(bytes("\n".join(str(i) for i in s3_files_list), "utf-8"))
     # fo = b'my data stored as file object in RAM'
     s3.upload_fileobj(fo, s3_bucket, 's3_files.txt')
     ########################################################################
@@ -96,8 +96,8 @@ def get_data():
     ########################################################################
     
     # Return our combined data from all "users_" objects.
-    # return data
-    return {"1":"10"}
+    return data
+    # return {"1":"10"}
 
 def handler(event, context):
     # Call the "get_data" function and return appropriately formatted results.
