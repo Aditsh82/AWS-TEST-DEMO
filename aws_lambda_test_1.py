@@ -97,7 +97,7 @@ def get_data():
     
     # Return our combined data from all "users_" objects.
     return data
-    # return {"1":"10"}
+
 
 def handler(event, context):
     # Call the "get_data" function and return appropriately formatted results.
