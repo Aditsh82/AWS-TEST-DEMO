@@ -64,25 +64,37 @@ def get_data():
     # ########################################################################
     # ########################################################################
 
-
+    ########################################################################
+    ########################################################################
+    ########################################################################
     s3_files_list = []
     
     for object_dict in objects:
-        print(object_dict["Key"])
-        # if not object_dict["Key"].lower().endswith((".py", ".txt", ".csv")):
-        if object_dict["Key"].startswith('aws') and ".py" not in object_dict["Key"]:
+        # print(object_dict["Key"])
+        if not object_dict["Key"].lower().endswith((".py", ".txt", ".csv")):
+        # if object_dict["Key"].startswith('aws') and ".py" not in object_dict["Key"]:
             file_object = s3.get_object( Bucket = s3_bucket, Key = object_dict["Key"])
             
             object_data = json.loads(file_object['Body'].read())
             # data += object_data
             
             if "12403" in json.dumps(object_data):
-                print("TRUEEEEEEEEE")
+                # print("TRUEEEEEEEEE")
                 s3_files_list.append(object_dict["Key"])
-            else:
-                print("FALSEEEEEEEE")
+            # else:
+            #     print("FALSEEEEEEEE")
         
     print("This is the final list ---------------",s3_files_list)
+
+    ########################### WORKING CODE ###############################
+    import io
+    fo = io.BytesIO(bytes(",".join(str(i) for i in s3_files_list), "utf-8"))
+    # fo = b'my data stored as file object in RAM'
+    s3.upload_fileobj(fo, s3_bucket, 's3_files.txt')
+    ########################################################################
+    ########################################################################
+    ########################################################################
+    
     # Return our combined data from all "users_" objects.
     # return data
     return {"1":"10"}
